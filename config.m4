@@ -6,7 +6,7 @@ dnl Check for regex library type
 dnl
 PHP_ARG_WITH(regex,,
 [  --with-regex=TYPE       Regex library type: system, php. [TYPE=php]
-                          WARNING: Do NOT use unless you know what you are doing!], php, no)
+                          WARNING: Do NOT use unless you know what you are doing!], php)
 
 case $PHP_REGEX in
   system)
@@ -35,7 +35,7 @@ if test "$REGEX_TYPE" = "php"; then
 fi
 PHP_EREG_CFLAGS="$PHP_EREG_CFLAGS -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1"
 
-PHP_NEW_EXTENSION(ereg, ereg.c $ereg_regex_sources, no,,$PHP_EREG_CFLAGS)
+PHP_NEW_EXTENSION(ereg, ereg.c $ereg_regex_sources, $ext_shared,, $PHP_EREG_CFLAGS)
 PHP_INSTALL_HEADERS([ext/ereg], [php_ereg.h php_regex.h $ereg_regex_headers])
 
 if test "$REGEX_TYPE" = "php"; then

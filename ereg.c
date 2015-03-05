@@ -96,11 +96,7 @@ zend_module_entry ereg_module_entry = {
 };
 /* }}} */
 
-/* {{{ COMPILE_DL_EREG */
-#ifdef COMPILE_DL_EREG
 ZEND_GET_MODULE(ereg)
-#endif
-/* }}} */
 
 /* {{{ ereg_lru_cmp */
 static int ereg_lru_cmp(const void *a, const void *b)
