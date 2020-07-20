@@ -14,7 +14,7 @@
    +----------------------------------------------------------------------+
    | Authors: Rasmus Lerdorf <rasmus@php.net>                             |
    |          Jim Winstead <jimw@php.net>                                 |
-   |          Jaakko Hyv‰tti <jaakko@hyvatti.iki.fi>                      | 
+   |          Jaakko Hyv√§tti <jaakko@hyvatti.iki.fi>                      | 
    +----------------------------------------------------------------------+
  */
 /* $Id$ */
@@ -140,7 +140,8 @@ static int _php_regcomp(regex_t *preg, const char *pattern, int cflags)
 
 	if (zend_hash_num_elements(&EREG(ht_rc)) >= EREG_CACHE_SIZE) {
 		/* easier than dealing with overflow as it happens */
-		if (EREG(lru_counter) >= (1 << 31) || zend_hash_sort(&EREG(ht_rc), (compare_func_t)ereg_lru_cmp, 0) == FAILURE) {
+		zend_hash_sort(&EREG(ht_rc), (compare_func_t)ereg_lru_cmp, 0);
+		if (EREG(lru_counter) >= (1 << 31)) {
 			zend_hash_clean(&EREG(ht_rc));
 			EREG(lru_counter) = 0;
 		} else {
@@ -294,7 +295,7 @@ static void php_ereg(INTERNAL_FUNCTION_PARAMETERS, int icase)
 	regex_t re;
 	regmatch_t *subs;
 	int err, match_len, string_len;
-	uint i;
+	uint32_t i;
 	int copts = 0;
 	off_t start, end;
 	char *buf = NULL;
@@ -454,7 +455,7 @@ PHP_EREG_API char *php_ereg_replace(const char *pattern, const char *replace, co
 			   1) find out how long the string will be, and allocate buf
 			   2) copy the part before match, replacement and backrefs to buf
 
-			   Jaakko Hyv‰tti <Jaakko.Hyvatti@iki.fi>
+			   Jaakko Hyv√§tti <Jaakko.Hyvatti@iki.fi>
 			   */
 
 			new_l = strlen(buf) + subs[0].rm_so; /* part before the match */
